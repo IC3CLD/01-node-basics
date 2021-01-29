@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 const path = require("path");
 const fs = require("fs").promises;
 
@@ -54,7 +55,7 @@ function addContact(name, email, phone) {
       const getContacts = JSON.parse(data);
       let newContacts = [
         ...getContacts,
-        { id: getContacts.length + 1, name, email, phone },
+        { id: uuidv4(), name, email, phone },
       ];
       fs.writeFile(contactsPath, JSON.stringify(newContacts));
       console.table(newContacts);
