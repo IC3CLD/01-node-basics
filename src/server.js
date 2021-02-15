@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import { getPaths } from "./helpers/utils.js";
 import path from "path";
 import contactRouter from "./contacts/contacts.router.js";
+import userRouter from './users/user.router.js';
 
 export class ContactsServer {
   constructor() {
@@ -55,7 +56,9 @@ export class ContactsServer {
   }
 
   initRoutes() {
-    this.server.use("/api/contacts", contactRouter);
+		this.server.use('/api/auth', userRouter);
+		this.server.use('/api/contacts', contactRouter);
+		this.server.use('/api/users', userRouter);
   }
 
   initErrorHandler() {
