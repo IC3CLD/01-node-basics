@@ -13,6 +13,7 @@ async function singUpUser(req, res, next) {
 		}
 
 		const encryptedPassword = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
+
 		const user = await userModel.create({ email, password: encryptedPassword });
 		const response = { user: { email: user.email, subscription: user.subscription } };
 
