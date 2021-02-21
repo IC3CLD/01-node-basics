@@ -8,11 +8,11 @@ const {
 	signOutUser,
 	getCurrentUser,
 	updateUserSubscription,
+	updateUsersAvatar
 } = userController;
 
 const {
-	validateSignUpUser,
-	validateSignInUser,
+	validateAuthUser,
 	validateUserToken,
 	validateUserID,
 	validateSub,
@@ -20,10 +20,11 @@ const {
 
 const userRouter = Router();
 
-userRouter.post('/register', validateSignUpUser, singUpUser);
-userRouter.post('/login', validateSignInUser, signInUser);
+userRouter.post('/register', validateAuthUser, singUpUser);
+userRouter.post('/login', validateAuthUser, signInUser);
 userRouter.post('/logout', validateUserToken, signOutUser);
 userRouter.get('/current', validateUserToken, getCurrentUser);
+userRouter.patch('/avatars', validateUserToken, updateUsersAvatar);
 userRouter.patch('/:id', validateUserID, validateUserToken, validateSub, updateUserSubscription);
 
 export default userRouter;

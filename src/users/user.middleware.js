@@ -6,33 +6,16 @@ import jwt from 'jsonwebtoken'
 const {Types} = mongoose;
 const {ObjectId} = Types;
 
-function validateSignUpUser(req, res, next) {
-	const createRegisterRules = Joi.object({
+function validateAuthUser(req, res, next) {
+	const authRules = Joi.object({
 		email: Joi.string().email().required(),
 		password: Joi.string().min(6).max(20).required(),
 	});
 
-	const validatedRegister = createRegisterRules.validate(req.body);
+	const validatedAuth = authRules.validate(req.body);
 
-	if (validatedRegister.error) {
-		const message = validatedRegister.error.details[0].message;
-
-		return res.status(400).json({ message });
-	}
-
-	next();
-}
-
-function validateSignInUser(req, res, next) {
-	const createLoginRules = Joi.object({
-		email: Joi.string().email().required(),
-		password: Joi.string().min(6).max(20).required(),
-	});
-
-	const validatedLogin = createLoginRules.validate(req.body);
-
-	if (validatedLogin.error) {
-		const message = validatedLogin.error.details[0].message;
+	if (validatedAuth.error) {
+		const message = validatedAuth.error.details[0].message;
 
 		return res.status(400).json({ message });
 	}
@@ -85,8 +68,7 @@ function validateSub(req, res, next) {
 }
 
 export {
-	validateSignUpUser,
-	validateSignInUser,
+	validateAuthUser,
 	validateUserToken,
 	validateUserID,
 	validateSub,

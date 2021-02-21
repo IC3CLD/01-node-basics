@@ -6,8 +6,11 @@ dotenv.config();
 import mongoose from "mongoose";
 import { getPaths } from "./helpers/utils.js";
 import path from "path";
+import multer from "multer";
 import contactRouter from "./contacts/contacts.router.js";
 import userRouter from './users/user.router.js';
+import fileStorage from './helpers/fileStorage.js';
+
 
 export class ContactsServer {
   constructor() {
@@ -49,8 +52,13 @@ export class ContactsServer {
       }
     }
 
+
+
   initMiddlewares() {
+    const { __dirname } = getPaths(import.meta.url);
     this.server.use(express.json());
+    this.server.use(`/public/images`, express.static(__dirname + '../public')); 
+		this.server.use(fileStorage.single('avatar'));
     this.server.use(morgan("combined"));
     this.server.use(cors({ origin: `http://localhost:${this.port}` }));
   }
