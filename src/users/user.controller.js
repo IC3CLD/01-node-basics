@@ -18,6 +18,7 @@ async function singUpUser(req, res, next) {
 		}
 
 		const encryptedPassword = await bcrypt.hash(password, parseInt(process.env.BCRYPT_SALT_ROUND));
+
 		const userAvatar = await avatarGen(next);
 
 		await imageCompressor(userAvatar);
