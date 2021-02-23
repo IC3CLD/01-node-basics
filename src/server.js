@@ -55,15 +55,15 @@ export class ContactsServer {
 
 
   initMiddlewares() {
-    const { __dirname } = getPaths(import.meta.url);
     this.server.use(express.json());
-    this.server.use(`/public/images`, express.static(__dirname + '../public')); 
 		this.server.use(fileStorage.single('avatar'));
     this.server.use(morgan("combined"));
     this.server.use(cors({ origin: `http://localhost:${this.port}` }));
   }
-
+  
   initRoutes() {
+    const { __dirname } = getPaths(import.meta.url);
+    this.server.use('/public/images', express.static(__dirname + '../public')); 
 		this.server.use('/api/auth', userRouter);
 		this.server.use('/api/contacts', contactRouter);
 		this.server.use('/api/users', userRouter);
